@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>StackOverWork</title>
+    <description>Code before you notice it
+</description>
+    <link>https://tommylike.github.io//</link>
+    <atom:link href="https://tommylike.github.io//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 03 Aug 2016 23:42:31 +0800</pubDate>
+    <lastBuildDate>Wed, 03 Aug 2016 23:42:31 +0800</lastBuildDate>
+    <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Paste Deploy 入门</title>
+        <description>&lt;h1 id=&quot;paste-deploy-&quot;&gt;Paste Deploy 入门&lt;/h1&gt;
+
+&lt;h2 id=&quot;paste-deploy&quot;&gt;什么是Paste Deploy&lt;/h2&gt;
+&lt;p&gt;Paste Depoly是一个用于发现和配置WSGI application和server的系统,以下是官方对PasteDeploy的定义:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Paste Deployment is a system for finding and configuring WSGI applications and servers.
+For WSGI application consumers it provides a single, simple function (loadapp) for loading a 
+WSGI application from a configuration file or a Python Egg. For WSGI application providers it 
+only asks for a single, simple entry point to your application, so that application users don’t 
+need to be exposed to the implementation details of your application.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;最主要的就是能快速构建复杂且独立的WSGI程序，还能屏蔽具体的实现。&lt;/p&gt;
+
+&lt;h2 id=&quot;paste-deploy-1&quot;&gt;安装Paste Deploy&lt;/h2&gt;
+&lt;p&gt;PasteDeploy已经从Paste库中剥离出来，可以单独安装:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install PasteDeploy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;paste-deploy--1&quot;&gt;Paste Deploy 服务加载&lt;/h2&gt;
+&lt;p&gt;使用PasteDeploy加载服务非常简单，大致的代码如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;paste.deploy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loadapp&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;wsgiref.simple_server&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;make_server&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;config_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;abspath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'config.ini'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;span class=&quot;n&quot;&gt;appname&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'test_app'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wsgi_app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loadapp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'config:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'config.ini'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relative_to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getcwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;make_server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'localhost'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wsgi_app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;serve_forever&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用loadapp指定配置文加载app最终放入server即可，需要注意的是:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;appname即你需要执行的application名，需要与配置文件中的名称保持一致( &lt;em&gt;[composite:xxxx]&lt;/em&gt; )&lt;/li&gt;
+  &lt;li&gt;load_app需要指定配置文件的绝对路径，如果是相对路径，需要通过 &lt;em&gt;relative_to&lt;/em&gt; 来指定相对的目录&lt;/li&gt;
+  &lt;li&gt;配置文件需要类似 &lt;em&gt;config:absolute_path&lt;/em&gt; 格式&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;config-&quot;&gt;Config 配置解析&lt;/h2&gt;
+&lt;p&gt;配置文件使用&lt;strong&gt;.INI(initialize)&lt;/strong&gt;的文件格式，在ini文件中一般使用键值对的方式进行配置:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;py&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;value&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;配置文件中可以使用&lt;strong&gt;;&lt;/strong&gt;或者&lt;strong&gt;#&lt;/strong&gt;作为注释符(必须在行首)，配置文件一般如下所示:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#this is a comment
+&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;[composite:main]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Paste#urlmap&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;home&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;blog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;blog&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;wiki&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wiki&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;cms&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config:cms.ini&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;;this is another comment
+&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;[app:home]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Paste#static&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;document_root&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;%(here)s/htdocs&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[filter-app:blog]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Authentication#auth&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;blogapp&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;roles&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;admin&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;htpasswd&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/home/me/users.htpasswd&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[app:blogapp]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:BlogApp&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;database&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sqlite:/home/me/blog.db&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[app:wiki]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;call:mywiki.main:application&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;database&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sqlite:/home/me/wiki.db&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;文件中使用单行的 &lt;strong&gt;[]&lt;/strong&gt; 将配置字段划分成多个区域(section)。Paste Deploy只关注有前缀的区域，格式一般如下所示:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[composite:main]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;:前面表示该区域的类型，后面表示区域的名称，类型一般有 &lt;em&gt;app,filter,pipeline,composition&lt;/em&gt; 等，下面以常见的类型做简单的介绍:&lt;/p&gt;
+
+&lt;h3 id=&quot;composite&quot;&gt;composite&lt;/h3&gt;
+&lt;p&gt;composite可以理解成是一个application的组合器或者url的分发器，负责把不同的url分发到不同的application中：&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[composite:main]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#即使用Paste中的urlmap模块进行url映射分发
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Paste#urlmap &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#指向本配置文件中的home app 
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;home&lt;/span&gt;                
+&lt;span class=&quot;c&quot;&gt;#指向本配置文件中的blog app
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;blog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;blog   &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#指向本配置文件中的wiki app         
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;wiki&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;wiki            &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#指向同级目录的另一个配置文件，作为二级app挂在到/cms下
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;cms&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config:cms.ini   &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;app&quot;&gt;app&lt;/h3&gt;
+&lt;p&gt;即application，app可以支持多种不同的应用，通过以下几种举例:&lt;/p&gt;
+
+&lt;p&gt;通过.ini文件指向另一个配置文件里的应用&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:configapp]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config:another_config_file.ini#config_name&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;指向Egg封装的应用&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:eggapp]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:AnotherApp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;指向模块中的应用&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:moduleapp]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;call:another_module:app&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;指向配置文件中的其他app&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:sectioneapp]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;antoher_section_app&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;指向paste/factory配置的app&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:factoryapp]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;paste.app_factory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;module_a.class_b.factory&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;指向静态资源路径&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:staticsfolder]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Paste#static   &lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;document_root&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;%(here)s/htdocs 这里使用%()s用于动态载入实际目录  &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;filter&quot;&gt;filter&lt;/h3&gt;
+&lt;p&gt;即过滤器，快速构建AOP模块，通常用来做校验，日志等，我们通过以下几种类型举例: 
+1.使用filter-with对指定app进行过滤&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[filter-app:blog]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Authentication#baseauth&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;blogapp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;以上配置中通过use和next，指明使用baseauthfilter对blogapp进行过滤&lt;/p&gt;
+
+&lt;p&gt;2.直接使用filter-with指定过滤器&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:main]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:MyEgg&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;filter-with&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;printdebug&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;[filter:printdebug]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;egg:Paste#printdebug&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;跟第一种方式比起来，filter-app能够快速被多个application复用。&lt;/p&gt;
+
+&lt;p&gt;3.使用pipeline快速建立多级过滤&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[pipeline:main]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;pipeline&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;filter1 egg:FilterEgg#filter2 filter3 app&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;需要注意的事，这里通过&lt;strong&gt;pipeline=&lt;/strong&gt;指定具体的过滤，可以指定多个，配置的先后顺序就是依次通过的顺序，但是必须要以一个application作为末尾节点。&lt;/p&gt;
+
+&lt;h3 id=&quot;config-variables&quot;&gt;Config Variables&lt;/h3&gt;
+&lt;p&gt;配置文件中支持配置全局或者局部变量，这些字段会在构建app的过程中作为参数传入,实例如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[DEFAULT]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;key_one&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;value&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;key_another&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;value&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;[app:another]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;key_section&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;value&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;在局部的配置中支持对变量进行覆盖重定义,使用关键字set&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[app:another]&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;py&quot;&gt;key_one&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;new_value&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;factories&quot;&gt;Factories&lt;/h3&gt;
+&lt;p&gt;Factories即我们的App/Filter生成器，需要遵守协议和规范定义，根据用途的不同，可以分为以下几种:&lt;/p&gt;
+
+&lt;h4 id=&quot;appfactory&quot;&gt;1.app_factory&lt;/h4&gt;
+&lt;p&gt;生成标准的WSGI application，规范如下&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;app_factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;global_config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wsgi_app&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;传入的参数:global_config和local_conf，分别对应我们的不同配置变量,以我们上面的配置文件举例，那实际传入的值如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#一般还会有其他字段,如__file__
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;global_config&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;{key_one:value,key_another:value,...} &lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;local_conf&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;{key_section:value}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;举一个实际的例子，加入我们现在要定义一个application，计算传入的param1和param2的和，并返回最终的和:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;webob&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Request&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Calculator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;req&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        
+        &lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;param1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GET&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;param2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;                 
+        &lt;span class=&quot;n&quot;&gt;start_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;200 OK&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,[(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Content-type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;text/plain&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;RESULT={0}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@classmethod&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;global_conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;        
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Calculator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#config files
+&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;[app:calculator]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;paste.app_factory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tommylike:Calculator.factory&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;filterfactory&quot;&gt;2.filter_factory&lt;/h4&gt;
+&lt;p&gt;跟我们的app_factory差不多，区别在于他接受的是一个WSGI app，同样假设我们要定义一个filter-app,用来做日志拦截记录:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LogFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Log Filter&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@classmethod&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;global_conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogFilter&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#config files
+&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;[filter:apilog]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;paste.filter_factory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tommylike:LogFilter.factory&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;filterappfactory&quot;&gt;3.filter_app_factory&lt;/h4&gt;
+&lt;p&gt;跟filter_factory相比，传入的参数多了一个app,可以借用上面的例子比较下&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-pythhon&quot;&gt;#used for  filter_factory
+@classmethod
+  def factory(cls, global_conf, **kwargs):      
+      return LogFilter1
+
+#used for filter_app_factory
+@classmethod
+  def factory(cls,app, global_conf, **kwargs):      
+      return LogFilter2(app)      
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;filterserver&quot;&gt;4. filter_server&lt;/h4&gt;
+&lt;p&gt;接受一个app，并返回封装这个app的server，举例代码如下&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;server_factory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;global_conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;serve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;serve_forever&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serve&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;serverfactory&quot;&gt;5. server_factory&lt;/h4&gt;
+&lt;p&gt;与filter_server差不多，区别在于server会马上拉起来，并且app是作为第一个参数传入,根filter_factory与filter_app_factory的区别一致。&lt;/p&gt;
+
+&lt;h3 id=&quot;oslomiddleware&quot;&gt;Oslo.middleware&lt;/h3&gt;
+&lt;p&gt;在Openstack中middleware提供了内置的filter以便我们方便取用，目前主要有两种filter，healthcheck和cors middleware&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;安装&lt;/h3&gt;
+&lt;p&gt;oslo.middleware目前是独立的组件，可以直接安装&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install oslo.middleware
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;healthcheck-middleware&quot;&gt;healthcheck middleware&lt;/h3&gt;
+&lt;p&gt;healthcheck middleware主要用于服务的健康状态检查，根据后端是否正常，返回200(服务正常)/503(服务不可用)配置文件如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[filter:healthcheck]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;paste.filter_factory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;oslo_middleware:Healthcheck.factory&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/healthcheck&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;backends&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;disable_by_file&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;disable_by_file_path&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/var/run/nova/healthcheck_disable&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[pipeline:public_api]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;pipeline&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;healthcheck sizelimit [...] public_service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其中 paste.filter_factory指明使用oslo_middleware中的healthcheck，path用来指明检测的具体url：&lt;em&gt;{resource}/healthcheck&lt;/em&gt;,backends用来指定后端的判定方式，目前有两种：&lt;/p&gt;
+
+&lt;p&gt;使用文件是否存在来检测，配置如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[filter:healthcheck]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#other config
+#指明使用文件来校验
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;backends&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;disable_by_file  &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#指明具体的文件，文件如果存在，healthcheck任务后端返回异常
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;disable_by_file_path&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/var/run/nova/healthcheck_disable &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用文件以及端口检测，配置如下:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[filter:healthcheck]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#other configs
+#指明文件以及端口校验
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;backends&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;disable_by_files_ports   &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#指明具体的端口和文件
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;disable_by_file_paths&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;5000:/var/run/keystone/healthcheck_disable,  &lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;/35357:/var/run/keystone/admin_healthcheck_disable&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;disable_by_file_paths&lt;/strong&gt;可以指明多个端口和对应的文件，根据访问的端口进行校验，比如当前端口是5000，则根据文件&lt;em&gt;/var/run/keystone/healthcheck_disable&lt;/em&gt;的存在与否决定服务是否健康，可以理解为&lt;strong&gt;disable_by_file&lt;/strong&gt;的增强版本&lt;/p&gt;
+
+&lt;h3 id=&quot;cors-middleware&quot;&gt;cors middleware&lt;/h3&gt;
+&lt;p&gt;cors middlreware用来控制跨域访问控制，也可以直接在配置文件中配置:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[filter:cors]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;paste.filter_factory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;oslo_middleware.cors:filter_factory&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;allowed_origin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://website.example.com:443,https://website2.example.com:443    #设置允许跨域访问的站点和方式等。&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;max_age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3600&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;allow_methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;GET,POST,PUT,DELETE&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;allow_headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;X-Custom-Header&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;expose_headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;X-Custom-Header&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 03 Aug 2016 21:59:44 +0800</pubDate>
+        <link>https://tommylike.github.io//openstack/2016/08/03/Paste-Deploy-Introduce.html</link>
+        <guid isPermaLink="true">https://tommylike.github.io//openstack/2016/08/03/Paste-Deploy-Introduce.html</guid>
+        
+        
+        <category>openstack</category>
+        
+      </item>
+    
+  </channel>
+</rss>
