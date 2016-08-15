@@ -5,7 +5,7 @@ subtitle:   "Python常见特性——装饰器和描述器"
 date:   2016-08-14 21:59:44 +0800
 categories: python
 author: "tommylike"
-header-img: "img/posts/telephone.jpg"
+header-img: "img/posts/code_line.jpeg"
 catalog: true
 tags:
     - python
