@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Python常见特性入门(装饰器和描述器)"
-subtitle:   "Python常见特性入门(装饰器和描述器)"
+title:  "Python常见特性入门(一)"
+subtitle:   "Python常见特性——装饰器和描述器"
 date:   2016-08-14 21:59:44 +0800
 categories: python
 author: "tommylike"
@@ -94,12 +94,14 @@ def outter_wrapper(log_level='info')
 def execute():
   pass
 ```
+
 ## 描述器(Descriptor)
 描述符是一个具有绑定行为的对象属性，其属性的访问被描述符协议方法覆写。这些方法是__get__()、 __set__()和__delete__()，一个对象中只要包含了这三个方法（至少一个），就称它为描述符。在python的多个特性:属性(特性)/方法/静态方法/类方法中都有应用。      
 1. 如果一个描述器定义了*__get__*和*__set__*，他就是一个资料描述器(data descriptor),可以用来定义属性。
 3. 如果一个描述器只定义了*__get__*，他就是一个非资料描述器，通常用来定义方法。
 
 以下是一个最基本的描述器的用法(属性):
+
 ```python
 class PropertyDescriptor(object):
 
@@ -119,12 +121,14 @@ class TestClass(object):
     attr_x = Property(12)      
 
 ```
+
 这样每次我们在调用对象*attr_x*属性的时候，相应的*__set__*和*__get__*函数就会被调用。    
 实际上，在python中，描述器在被调用的时候根据类型不同，内部具体调用的方法也不一样。
 1. 如果调用方为object instance那相当于调用:*type(instance).__dict__['x'].__get__(instance, type(instance))*  
 2. 如果调用方为type那相当于调用:*type(instance).__dict__['x'].__get__(None, type(instance))*    
 
 以上面的代码为例:
+
 ```python
 instance = TestClass()
 instance.attr_x == type(instance).__dict__['attr_x'].__get__(instance, type(instance))
@@ -133,6 +137,7 @@ TestClass.attr_x == TestClass.__dict__['attr_x'].__get__(None, TestClass)
 
 ### 特性
 Python内建的property能够帮我们快速构建属性，假设我们现在有个Person对象，需要一个adult(成年)属性根据age(年龄)自动计算，那通过property，代码则大致如下:
+
 ```python
 class Person:
 
@@ -147,7 +152,9 @@ class Person:
 tommy = Person(24)
 print(tommy.adult) #True
 ```
+
 python的property支持定义属性的读取/修改/删除/文档操作，用法如下:  
+
 ```python
 def get_property_x(self):
   return self.x
@@ -158,6 +165,7 @@ property_x = property(get_property_x,set_property_x,delete_property_x,document_s
 
 ### 函数
 Python中的一切资源都是面向对象的，这里也包括函数,我们看一个简单的例子:
+
 ```python
 class TestMethod(object):
 
@@ -166,10 +174,12 @@ class TestMethod(object):
 
 print(TestMethod.__dict__['hello'])  #<function TestMethod.hello at 0x01178BB8>
 ```
+
 实际上从类中调用*TestMethod.hello*，返回的是一个unbound对象，而从实例中调用*instance.hello*返回的是一个bound对象，在[这里](http://damnever.github.io/2015/05/07/adding-a-method-to-an-existing-object/)可以看到更多关于bound/unbound的资料  
 python中定义类方法和静态方法都是使用描述器和装饰器组合来实现的，具体实现代码参考:[link](https://harveyqing.gitbooks.io/python-read-and-write/content/python_advance/python_descriptor.html)。   
 
 #### 类方法
+
 ```python
 class ClassMethod(object):
     "Emulate PyClassMethod_Type() in Objects/funcobject.c"
@@ -186,6 +196,7 @@ class ClassMethod(object):
 ```
 
 #### 静态方法
+
 ```python
 class StaticMethod(object):
     "Emulate PyStaticMethod_Type() in Objects/funcobject.c"
