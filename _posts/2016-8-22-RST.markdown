@@ -35,7 +35,7 @@ RST中的加粗和斜体跟Markdown中用法一致都是通过`*`和`**`来指�
 ```
 please contact email `<http://username.organisze.org/>`_
 ```
-3. 内嵌链接embedded hyperlink   
+3. embedded hyperlink   
 内嵌的外部链接，引用和定义放在一起  
 ```
 `display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,  
@@ -43,14 +43,14 @@ please contact email `<http://username.organisze.org/>`_
 External hyperlinks, like `Python <http://www.python.org/>`_.  RST  
 External hyperlinks, like [Python](http://www.python.org/).  Markdown  
 ```  
-4. hyperlink target  
-引用和定义分开，可以多次引用，使用_建立对应关系，定义和应用不用放在一起，可用于纸质输出文档，他的效果和我们上面最终的效果一致:      
+4. hyperlink target   
+引用和定义分开，可以多次引用，使用_建立对应关系，可用于纸质输出文档，他的效果和我们上面最终的效果一致:       
 ```
-External hyperlinks, like Python_.    
-
-.. _Python: http://www.python.org/  
-```  
-5. inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:        
+    External hyperlinks, like Python_.    
+    
+    .. _Python: http://www.python.org/  
+```   
+5. inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:         
 ```
 # 其实就是在定义的时候生成一个带id的div，到时候再通过#指向该区域而已
 External hyperlinks, like Python2_.  
@@ -65,21 +65,21 @@ Title link :`This is title`_.
 
 This is title  
 =============    
-```    
+```     
 6. 图片引用     
 简单的图片插入可以使用*image*,具体参照如下:    
 ```
      For instance:
      .. image:: images/ball1.gif (这里支持相对和绝对路径)  
-```
-如果需要在inline中使用png图标，可以配合使用||:  
+```  
+如果需要在inline中使用png图标，可以配合使用||:   
 ```
      The |biohazard| symbol must be used on containers used to dispose of medical waste.
 
      .. |biohazard| image:: biohazard.png
-```
-5. 页脚注释引用     
-可以使用[index]\_:     
+```  
+7. 页脚注释引用      
+可以使用[index]\_:      
 ```
     Footnote references, like [5]_.
 
@@ -95,8 +95,8 @@ This is title
     .. [#] This is the second one.   actual 3
 
 ```
-6. 引证  
-引证的用法跟页脚注释引用一致:  
+8. 引证   
+引证的用法跟页脚注释引用一致:   
 
 ```
   Citation references, like [CIT2002]_.
