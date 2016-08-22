@@ -171,7 +171,7 @@ RST中的无序列表跟markdown很像，支持多个不同的符号`- * +`,符�
 ```
 
 ### 有序列表
-RST中的有序列表支持使用`#`作为自增长符号:    
+RST中的有序列表支持使用**#**作为自增长符号:    
 
 ```rst
   This is sequenced list:
@@ -201,7 +201,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
 ```
 
 #### 字段列表  
-字段列表在form和brief中比较常见，格式跟定义列表很像，区别在于需要以`:`开头:   
+字段列表在form和brief中比较常见，格式跟定义列表很像，区别在于需要以**:**开头:   
 
 ```rst
   :Authors:
@@ -227,9 +227,9 @@ RST中的有序列表支持使用`#`作为自增长符号:
 ```
 
 ### Literal Blocks(Quota Blocks)
-这个跟我们的引用区域很像，通过查看生成的html源代码可以看到literal blocks会生成\<pre\>标记，
-而我们的引用区域是直接生成\<blockquota\>标签
-这个也能方便我们理解他的作用,一般通过::来标记开始，内容区域需要使用缩进或者\>来表示:
+这个跟我们的引用区域很像，通过查看生成的html源代码可以看到literal blocks会生成**\<pre\>**标记，
+而我们的引用区域是直接生成**\<blockquota\>**标签
+这个也能方便我们理解他的作用,一般通过**::**来标记开始，内容区域需要使用缩进:
 
 ```rst
   content below is literal Blocks::
@@ -241,7 +241,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
   this is another paragraph
 ```
 
-或者通过>来表示:  
+或者通过**>**来表示:  
 
 ```rst
   content below is literal Blocks::
@@ -284,7 +284,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
 
 ## RST文件预览(windows环境)  
 
-跟markdown一样，在编写文档的时候，我们也需要能够本地即时预览，在这一点上Sublimetext和他强大的plugin在合适不过了，这里推荐[**OmniMarkupPreviewer**](https://github.com/timonwong/OmniMarkupPreviewer)，大部分的markup语言都支持预览:    
+跟markdown一样，在编写文档的时候，我们也需要能够本地即时预览，在这一点上Sublimetext和他强大的plugin再合适不过了，这里推荐[**OmniMarkupPreviewer**](https://github.com/timonwong/OmniMarkupPreviewer)，大部分的markup语言都支持:    
 
 1. Markdown
 2. reStruecturedText
@@ -297,4 +297,4 @@ RST中的有序列表支持使用`#`作为自增长符号:
 9. Literate Haskell
 10. WikiCreole
 
-并且还支持实时预览,浏览器预览快捷键(<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd>)  
+插件支持实时预览,浏览器预览快捷键(<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd>)  
