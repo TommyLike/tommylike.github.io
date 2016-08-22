@@ -110,7 +110,7 @@ RST文档规范中定义了几种不同类型的链接,我们这里只介绍常�
 
 ### 段落和其他
 1. 标题    
-标题是通过在文字的下面或者上下面增加一行特殊字符表示，字符的长度不能短于文字的长度，可供选择的字符有:`= -  : ' " ~ ^ _ * + # < >`, 比如:  
+标题是通过在文字的下面或者上下面增加一行特殊字符表示，字符的长度不能短于文字的长度，可供选择的字符有:`= -  : ' " ~ ^ _ * + # < >`, 比如:   
 ```
   =====
   Title
@@ -118,7 +118,7 @@ RST文档规范中定义了几种不同类型的链接,我们这里只介绍常�
   Subtitle
   --------
 ```
-虽然RST本身没有规定层级标题的用法，但是python对不同级别的标题还是有建议规范:  
+虽然RST本身没有规定层级标题的用法，但是python对不同级别的标题还是有建议规范:   
     1. \# with overline, for parts
     2. \* with overline, for chapters
     3. =, for sections
@@ -126,14 +126,14 @@ RST文档规范中定义了几种不同类型的链接,我们这里只介绍常�
     5. ^, for subsubsections
     6. ", for paragraphs
 2. 段落  
-段落不需要缩进，但是新的段落需要空行，如一下面所示:   
+段落不需要缩进，但是新的段落需要空行，如一下面所示:    
 ```
   This is a paragraph.
 
   This is another paragraph
 ```
 3. 无序列表
-RST中的无序列表跟markdown很像，支持多个不同的符号`- * +`,符号和内容之前需要有空格:
+RST中的无序列表跟markdown很像，支持多个不同的符号`- * +`,符号和内容之前需要有空格:  
 ```
   This is a list
 
@@ -142,7 +142,7 @@ RST中的无序列表跟markdown很像，支持多个不同的符号`- * +`,符�
   - item3
 ```
 4. 有序列表
-RST中的有序列表支持使用`#`作为自增长符号:    
+RST中的有序列表支持使用`#`作为自增长符号:     
 ```
   This is sequenced list:
 
@@ -152,7 +152,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
   #. item4
 ```
 5. 定义列表  
-定义列表在python的documentation中很常见，需要注意的是在定义的内容中需要缩进，不同的内容之间需要有空行:  
+定义列表在python的documentation中很常见，需要注意的是在定义的内容中需要缩进，不同的内容之间需要有空行:   
 ```
   Definition lists:
 
@@ -169,7 +169,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
 ```
 
 6. 字段列表  
-字段列表在form和brief中比较常见，格式跟定义列表很像，区别在于需要以`:`开头:  
+字段列表在form和brief中比较常见，格式跟定义列表很像，区别在于需要以`:`开头:   
 ```
   :Authors:
       Tony J. (Tibs) Ibbs,
@@ -180,7 +180,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
   :Dedication: To my father.
 ```
 7. 命令选项列表
-这个能帮我们快速构建命令行参数文档，需要注意的是在描述和参数中间至少需要两个空格:  
+这个能帮我们快速构建命令行参数文档，需要注意的是在描述和参数中间至少需要两个空格:   
 ```
   -a            command-line option "a"
   -b file       options can have arguments
@@ -240,8 +240,9 @@ RST中的有序列表支持使用`#`作为自增长符号:
   transitions be immediately adjacent.
 ```
 
-## RST文件预览(windows环境)
-跟markdown一样，在编写文档的时候，我们也需要能够本地即时预览，在这一点上Sublimetext和他强大的plugin在核实不过了，这里推荐[**OmniMarkupPreviewer**](https://github.com/timonwong/OmniMarkupPreviewer)，大部分的markup语言都支持预览:  
+## RST文件预览(windows环境)  
+
+跟markdown一样，在编写文档的时候，我们也需要能够本地即时预览，在这一点上Sublimetext和他强大的plugin在核实不过了，这里推荐[**OmniMarkupPreviewer**](https://github.com/timonwong/OmniMarkupPreviewer)，大部分的markup语言都支持预览:    
 1. Markdown
 2. reStruecturedText
 3. Textile
@@ -252,4 +253,4 @@ RST中的有序列表支持使用`#`作为自增长符号:
 8. AsciiDoc
 9. Literate Haskell
 10. WikiCreole
-并且还支持实时预览,浏览器预览快捷键(<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd>)
+并且还支持实时预览,浏览器预览快捷键(<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd>)  
