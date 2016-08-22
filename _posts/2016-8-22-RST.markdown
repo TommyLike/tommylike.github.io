@@ -57,7 +57,8 @@ External hyperlinks, like Python_.
 .. _Python: http://www.python.org/  
 ```   
 
-#### inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:  
+#### inline hyperlink  
+引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:    
 
 ```rst
 # 其实就是在定义的时候生成一个带id的div，到时候再通过#指向该区域而已
@@ -83,7 +84,7 @@ This is title
      .. image:: images/ball1.gif (这里支持相对和绝对路径)  
 ``` 
 
-如果需要在inline中使用png图标，可以配合使用||:   
+如果需要在inline中使用png图标，可以配合使用\|\|:   
 
 ```rst
      The |biohazard| symbol must be used on containers used to dispose of medical waste.
@@ -281,7 +282,7 @@ RST中的有序列表支持使用`#`作为自增长符号:
 
 ## RST文件预览(windows环境)  
 
-跟markdown一样，在编写文档的时候，我们也需要能够本地即时预览，在这一点上Sublimetext和他强大的plugin在核实不过了，这里推荐[**OmniMarkupPreviewer**](https://github.com/timonwong/OmniMarkupPreviewer)，大部分的markup语言都支持预览:    
+跟markdown一样，在编写文档的时候，我们也需要能够本地即时预览，在这一点上Sublimetext和他强大的plugin在合适不过了，这里推荐[**OmniMarkupPreviewer**](https://github.com/timonwong/OmniMarkupPreviewer)，大部分的markup语言都支持预览:    
 
 1. Markdown
 2. reStruecturedText
