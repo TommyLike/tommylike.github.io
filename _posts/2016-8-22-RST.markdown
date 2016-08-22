@@ -38,12 +38,12 @@ please contact email `<http://username.organisze.org/>`_
 3. 链接  
 RST文档规范中定义了几种不同类型的链接,我们这里只介绍常见的三种:   
   1.embedded hyperlink,内嵌的外部链接，引用和定义放在一起  
-  ```
-    `display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,  
-    以下面实际的例子对比Markdown:  
-    External hyperlinks, like `Python <http://www.python.org/>`_.  RST  
-    External hyperlinks, like [Python](http://www.python.org/).  Markdown  
-  ```  
+```
+`display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,  
+以下面实际的例子对比Markdown:  
+External hyperlinks, like `Python <http://www.python.org/>`_.  RST  
+External hyperlinks, like [Python](http://www.python.org/).  Markdown  
+```  
  2 hyperlink target,引用和定义分开，可以多次引用，使用_建立对应关系，定义和应用不用放在一起，可用于纸质输出文档，他的效果和我们上面最终的效果一致:      
   ```
     External hyperlinks, like Python_.    
