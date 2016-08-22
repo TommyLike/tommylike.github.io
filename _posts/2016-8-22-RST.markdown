@@ -25,7 +25,7 @@ reStructuredText通常简称为RST,ReST,reST,是Python里面最为常见的文�
 ### 文本
 
 1. 加粗和斜体  
-RST中的加粗和斜体跟Markdown中用法一致都是通过`*`和`**`来指定的:
+RST中的加粗和斜体跟Markdown中用法一致都是通过`*`和`**`来指定的:  
 ```
 *this is italics*
 **this is bold**
@@ -39,18 +39,18 @@ please contact email `<http://username.organisze.org/>`_
 RST文档规范中定义了几种不同类型的链接,我们这里只介绍常见的三种:   
   1.embedded hyperlink,内嵌的外部链接，引用和定义放在一起  
   ```
-  `display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,
-  以下面实际的例子对比Markdown:
-  External hyperlinks, like `Python <http://www.python.org/>`_.  RST
-  External hyperlinks, like [Python](http://www.python.org/).  Markdown
-  ```
- 2 hyperlink target,引用和定义分开，可以多次引用，使用_建立对应关系，定义和应用不用放在一起，可用于纸质输出文档，他的效果和我们上面最终的效果一致:  
+    `display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,
+    以下面实际的例子对比Markdown:
+    External hyperlinks, like `Python <http://www.python.org/>`_.  RST
+    External hyperlinks, like [Python](http://www.python.org/).  Markdown
+  ```  
+ 2 hyperlink target,引用和定义分开，可以多次引用，使用_建立对应关系，定义和应用不用放在一起，可用于纸质输出文档，他的效果和我们上面最终的效果一致:    
   ```
   External hyperlinks, like Python_.
 
   .. _Python: http://www.python.org/
-  ```
-  3.inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:      
+  ```  
+  3.inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:        
   ```
   其实就是在定义的时候生成一个带id的div，到时候再通过#指向该区域而已
   External hyperlinks, like Python2_.
@@ -65,8 +65,8 @@ RST文档规范中定义了几种不同类型的链接,我们这里只介绍常�
 
   This is title
   =============  
-  ```  
-4. 图片引用    
+  ```    
+4. 图片引用     
 简单的图片插入可以使用*image*,具体参照如下:    
 ```
      For instance:
