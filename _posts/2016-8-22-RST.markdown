@@ -25,7 +25,7 @@ reStructuredText通常简称为RST,ReST,reST,是Python里面最为常见的文�
 ### 文本
 
 1. 加粗和斜体  
-RST中的加粗和斜体跟Markdown中用法一致都是通过`*`和`**`来指定的:  
+RST中的加粗和斜体跟Markdown中用法一致都是通过\*和\*\*来指定的:    
 ```rst
 *this is italics*
 **this is bold**
