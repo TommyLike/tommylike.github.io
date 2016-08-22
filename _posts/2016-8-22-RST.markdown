@@ -38,17 +38,16 @@ please contact email `<http://username.organisze.org/>`_
 3. embedded hyperlink   
 内嵌的外部链接，引用和定义放在一起  
 ```
-`display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,  
-以下面实际的例子对比Markdown:  
-External hyperlinks, like `Python <http://www.python.org/>`_.  RST  
-External hyperlinks, like [Python](http://www.python.org/).  Markdown  
+   `display_text link_address`_ :在引用符中间就是具体的显示字符和链接地址并跟着_,  
+   以下面实际的例子对比Markdown:  
+   External hyperlinks, like `Python <http://www.python.org/>`_.  RST  
+   External hyperlinks, like [Python](http://www.python.org/).  Markdown  
 ```  
 4. hyperlink target   
 引用和定义分开，可以多次引用，使用_建立对应关系，可用于纸质输出文档，他的效果和我们上面最终的效果一致:       
 ```
-External hyperlinks, like Python_.    
-   
-.. _Python: http://www.python.org/  
+   External hyperlinks, like Python_.    
+   .. _Python: http://www.python.org/  
 ```   
 5. inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:         
 ```
