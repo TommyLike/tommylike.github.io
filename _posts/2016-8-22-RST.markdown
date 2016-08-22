@@ -5,7 +5,7 @@ subtitle: "python文档规范学习"
 date: 2016-08-22 18:59:44 +0800
 categories: openstack
 author: "tommylike"
-header-img: "img/posts/telephone.jpg"
+header-img: "img/posts/hands-working.jpg"
 catalog: true
 tags:
 - openstack
