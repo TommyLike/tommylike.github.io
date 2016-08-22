@@ -39,7 +39,7 @@ RST中的加粗和斜体跟Markdown中用法一致都是通过\*和\*\*来指定
 please contact email `<http://username.organisze.org/>`_
 ```
 
-#### embedded hyperlink   
+#### Embedded hyperlink   
 内嵌的外部链接，引用和定义放在一起  
 
 ```rst
@@ -50,7 +50,7 @@ External hyperlinks, like `Python <http://www.python.org/>`_.  RST
 External hyperlinks, like [Python](http://www.python.org/).  Markdown  
 ```  
 
-#### hyperlink target   
+#### Hyperlink target   
 引用和定义分开，可以多次引用，使用_建立对应关系，可用于纸质输出文档，他的效果和我们上面最终的效果一致:  
 
 ```rst
@@ -59,7 +59,7 @@ External hyperlinks, like Python_.
 .. _Python: http://www.python.org/  
 ```   
 
-#### inline hyperlink  
+#### Inline hyperlink  
 引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:    
 
 ```rst
