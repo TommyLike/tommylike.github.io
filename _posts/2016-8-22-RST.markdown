@@ -46,9 +46,9 @@ External hyperlinks, like [Python](http://www.python.org/).  Markdown
 4. hyperlink target   
 引用和定义分开，可以多次引用，使用_建立对应关系，可用于纸质输出文档，他的效果和我们上面最终的效果一致:       
 ```
-    External hyperlinks, like Python_.    
-    
-    .. _Python: http://www.python.org/  
+External hyperlinks, like Python_.    
+   
+.. _Python: http://www.python.org/  
 ```   
 5. inline hyperlink,引用文章内部的区域,就类似于url里面的\#,语法跟外部target引用一样，只是定义的时候需要使用如下的格式:         
 ```
