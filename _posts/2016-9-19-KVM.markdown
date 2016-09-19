@@ -5,7 +5,7 @@ subtitle: "虚拟化和相关工具介绍"
 date: 2016-08-27 18:59:44 +0800
 categories: openstack
 author: "tommylike"
-header-img: "img/posts/telephone.jpg"
+header-img: "img/posts/virtual.jpg"
 catalog: true
 tags:
 - openstack
@@ -17,9 +17,11 @@ tags:
 # 虚拟化简介
 
 ## 什么是虚拟化?
-虚拟化（Virtualization）技术最早出现在 20 世纪 60 年代的 IBM 大型机系统，在70年代的 System 370 系列中逐渐流行起来，这些机器通过一种叫虚拟机监控器（Virtual Machine Monitor，VMM）的程序在物理硬件之上生成许多可以运行独立操作系统软件的虚拟机（Virtual Machine）实例。随着近年多核系统、集群、网格甚至云计算的广泛部署，虚拟化技术在商业应用上的优势日益体现，不仅降低了 IT 成本，而且还增强了系统安全性和可靠性，虚拟化的概念也逐渐深入到人们日常的工作与生活中。
-
+ 
 ![computer system layer](/img/posts/computer.jpg)   
+
+
+虚拟化（Virtualization）技术最早出现在 20 世纪 60 年代的 IBM 大型机系统，在70年代的 System 370 系列中逐渐流行起来，这些机器通过一种叫虚拟机监控器（Virtual Machine Monitor，VMM）的程序在物理硬件之上生成许多可以运行独立操作系统软件的虚拟机（Virtual Machine）实例。随着近年多核系统、集群、网格甚至云计算的广泛部署，虚拟化技术在商业应用上的优势日益体现，不仅降低了 IT 成本，而且还增强了系统安全性和可靠性，虚拟化的概念也逐渐深入到人们日常的工作与生活中。
 
 计算机的系统结构如上图所示，在硬件层和操作系统层之间，我们有一个硬件抽象层，他是操作系统实际交互的系统层。利用这个交互层，我们就可以通过软件，模拟返回上层需要的数据，达到虚拟化的目的。
 
@@ -29,6 +31,7 @@ tags:
 ![hypertype](/img/posts/hypertype.jpg)   
 
 ## 虚拟化的平台类型 
+
 ### 全虚拟化 
 
 全虚拟化是指虚拟机模拟了完整的底层硬件，包括处理器、物理内存、时钟、外设等，使得为原始硬件设计的操作系统或其它系统软件完全不做任何修改就可以在虚拟机中运行。操作系统与真实硬件之间的交互可以看成是通过一个预先规定的硬件接口进行的。全虚拟化 VMM 以完整模拟硬件的方式提供全部接口（同时还必须模拟特权指令的执行过程）。这种模式下Guest OS 一般会降级运行(ring1)，当Guest OS需要执行特权指令时，会触发异常，被VMM捕获(ring0)并执行。使用全虚拟化的VMM有:Microsoft Virtual PC、VMware Workstation、Sun Virtual Box、Parallels Desktop for Mac
@@ -47,7 +50,7 @@ VMM只模拟部分底层硬件，因此客户机操作系统不做修改是无�
 
 ### 操作系统级虚拟化
 
-在传统操作系统中，所有用户的进程本质上是在同一个操作系统的实例中运行，因此内核或应用程序的缺陷可能影响到其它进程。操作系统级虚拟化是一种在服务器操作系统中使用的轻量级的虚拟化技术，内核通过创建多个虚拟的操作系统实例（内核和库）来隔离不同的进程，不同实例中的进程完全不了解对方的存在。比较著名的有 Solaris Container [2]，FreeBSD Jail 和 OpenVZ 等。
+在传统操作系统中，所有用户的进程本质上是在同一个操作系统的实例中运行，因此内核或应用程序的缺陷可能影响到其它进程。操作系统级虚拟化是一种在服务器操作系统中使用的轻量级的虚拟化技术，内核通过创建多个虚拟的操作系统实例（内核和库）来隔离不同的进程，不同实例中的进程完全不了解对方的存在。比较著名的有 Solaris Container [2]，FreeBSD,Jail和OpenVZ等。
 
 ## 虚拟化的核心技术 
 
@@ -57,14 +60,15 @@ VMM只模拟部分底层硬件，因此客户机操作系统不做修改是无�
 4. 网络虚拟化
 5. GPU虚拟化
 
+## 常见的虚拟软件 
 
-## 常见的虚拟软件
 1. VMware VMware是x86的主流虚拟化厂商之一，目前的产品有:VMware ESX Server(直接运行在物理硬件层),VMware Workstation(基于操作系统的虚拟化类型，主要面向Windows和Linux),VMware Fusion(跟Workstation定位一致，面向Mac系统)
 2. Microsoft 跟windows系统配合很好，主要有Virtual PC(面向桌面)和Virtual Server(面向服务器)
 3. Xen 起源于英国剑桥大学的一个研究项目，基于硬件层的虚拟化软件。
 4. KVM 基于GPL的开源软件，是基于软件层的虚拟化软件，现在他利用Inter VT等技术达到硬件虚拟化，利用QEMU来提供设备虚拟化，所以也可以理解成基于硬件的完全虚拟化软件。
 
-## KVM
+## KVM  
+
 KVM的运行的架构图大致如下:  
 
 ![kvm_structure](/img/posts/kvm_structure.gif)   
